@@ -49,8 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HowToClimbProject\ApiKey.txt" />
-    <Content Include="matches1.json" />
-    <Content Include="matchtest.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

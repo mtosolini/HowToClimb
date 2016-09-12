@@ -1,5 +1,5 @@
 import json
-
+# ON VERRA PLUS TARD - SERIALISATION DES JSON ? MAUVAISE IDEE ? 
 # Recuperation du fichier
 
 def up_files(filename):

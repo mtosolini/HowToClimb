@@ -244,6 +244,6 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 
-#Custom Ignore
+# Custom Ignore
 *.json
 *.txt
