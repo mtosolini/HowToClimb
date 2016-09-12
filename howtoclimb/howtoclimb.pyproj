@@ -48,6 +48,7 @@
     <Folder Include="HowToClimbProject\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="HowToClimbProject\ApiKey.txt" />
     <Content Include="matches1.json" />
     <Content Include="matchtest.json" />
   </ItemGroup>

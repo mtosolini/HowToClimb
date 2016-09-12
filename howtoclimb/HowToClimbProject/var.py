@@ -2,7 +2,8 @@ import time
 
 class ApiCst():
     def __init__(self, region="euw", apiUrl="https://euw.api.pvp.net"):
-        self.key = "d5a5fe46-393f-4c7f-82b8-2782c37739be"
+        with open('HowToClimbProject/ApiKey.txt') as constant:
+            self.key = constant.read()
         self.region = region
         self.calls = 0
         self.firstCall = time.time()
@@ -13,8 +14,6 @@ class ApiCst():
     def rateLimitWaiter(self):
         timestamp = time.time() - self.lastCall
         if timestamp < self.rate:
-            #print('timestamp: '+str(timestamp))
-            #print('calls: '+str(self.calls))
             time.sleep(self.rate - timestamp)
             self.lastCall = time.time()
             self.calls+=1

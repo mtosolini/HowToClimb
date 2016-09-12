@@ -12,6 +12,7 @@ def getTheJunglersPositions(match, junglers):
                 listPositionJunglers.append({'id':jungler.get('id'), 'team': jungler.get('team'), 'positions':listPositions.get(id)})
     return listPositionJunglers
 
+
 # Si team bleue/rouge - si start red/bleu - 4 cas possibles.
 def getJunglerStart(junglerPosition):
     print('todo')

@@ -52,6 +52,7 @@ def hasWonSummonerName(match, summonerName):
     except:
         print('Winner introuvable')
 
+# Extract all the positions of the players with the timestamp associated
 def extractPositions(_match):
     listPositions = { }
     if 'timeline' in _match:
@@ -73,6 +74,22 @@ def extractPositions(_match):
                             listPositions.get(playerId).append(position)
     return listPositions
     
+#Extract all the positions of one of the player, based on the Id
+def extractPositionsByPlayerId(_match, _playerId):
+    listPositions = {str(_playerId) : []}
+    if 'timeline' in _match:
+       for frames in _match.get('timeline').get('frames'):
+            players = frames.get('participantFrames')
+            for player in players.items():
+                if 'participantId' in player[1]:
+                    if int(player[1].get('participantId'))==int(_playerId):
+                        if 'position' in player[1]:
+                            position = player[1].get('position')
+                            position['t'] = frames.get('timestamp')
+                            listPositions.get(str(_playerId)).append(position)
+    return listPositions
+
+
 def returnedToFountain(event, team, idPlayer):
 	if event.get('eventType')=='ITEM_PURCHASED' and str(event.get('participantId'))==str(idPlayer) :
 		if team == 100:
