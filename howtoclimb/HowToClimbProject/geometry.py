@@ -1,6 +1,6 @@
 # Fonctions utiles
 
-def inOnRedSide(squareSide,x,y):
+def isOnRedSide(squareSide,x,y):
     return x >= (squareSide - y)
 
 def isOnBotSide(x, y):
