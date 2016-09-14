@@ -53,7 +53,7 @@ def hasWonSummonerName(match, summonerName):
         print('Winner introuvable')
 
 # Extract all the positions of the players with the timestamp associated
-def extractPositions(_match):
+def extractPositions(_match, timeAccuracy = 1):
     listPositions = { }
     if 'timeline' in _match:
        for frames in _match.get('timeline').get('frames'):
@@ -64,18 +64,18 @@ def extractPositions(_match):
                     if playerId in listPositions:
                         position = player[1].get('position')
                         if 'position' in player[1]:
-                            position['t'] = frames.get('timestamp')
+                            position['t'] = int(frames.get('timestamp')/(1000/timeAccuracy))
                             listPositions.get(playerId).append(position)
                     else:
                         position = player[1].get('position')
                         if 'position' in player[1]:
-                            position['t'] = frames.get('timestamp')
+                            position['t'] = int(frames.get('timestamp')/(1000/timeAccuracy))
                             listPositions[playerId]=[]
                             listPositions.get(playerId).append(position)
     return listPositions
     
 #Extract all the positions of one of the player, based on the Id
-def extractPositionsByPlayerId(_match, _playerId):
+def extractPositionsByPlayerId(_match, _playerId, timeAccuracy = 1):
     listPositions = {str(_playerId) : []}
     if 'timeline' in _match:
        for frames in _match.get('timeline').get('frames'):
@@ -85,7 +85,7 @@ def extractPositionsByPlayerId(_match, _playerId):
                     if int(player[1].get('participantId'))==int(_playerId):
                         if 'position' in player[1]:
                             position = player[1].get('position')
-                            position['t'] = frames.get('timestamp')
+                            position['t'] = int(frames.get('timestamp')/(1000/timeAccuracy))
                             listPositions.get(str(_playerId)).append(position)
     return listPositions
 
