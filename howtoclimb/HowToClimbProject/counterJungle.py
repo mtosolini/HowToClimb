@@ -22,7 +22,7 @@ def getJunglerStart(junglerPosition):
     junglerPositionOut = junglerPosition
     position = junglerPosition.get('positions')[2]
     RedSideNormalStart = g.isOnRedSide(15000, position.get('x'), position.get('y')) and junglerPosition.get('team')==200 
-    BlueSideNormalStart = g.isOnRedSide(15000, position.get('x'), position.get('y')) and junglerPosition.get('team')==100
+    BlueSideNormalStart = (not g.isOnRedSide(15000, position.get('x'), position.get('y'))) and junglerPosition.get('team')==100
     if RedSideNormalStart or BlueSideNormalStart:
         junglerPositionOut['invade'] = False
     else:
@@ -32,14 +32,36 @@ def getJunglerStart(junglerPosition):
 
 
 # in : match, summonerName
-# out : dic : {id:, team:, invade:, botstart:, positions:[]}
+# out : dic : {id:, name, team:, invade:, botstart:, positions:[]}
 def getTheJungleRoot(match, junglerName):
     playerId = m.getPlayersIdByName(match, junglerName)
     jungler = m.extractPositionsByPlayerId(match, playerId)
-    jungleRoot = {'id':playerId, 'team': m.getPlayersTeamByParticipantId(match, playerId), 'positions':jungler.get(str(playerId))}
+    jungleRoot = {'name': junglerName, 'id':playerId, 'team': m.getPlayersTeamByParticipantId(match, playerId), 'positions':jungler.get(str(playerId))}
     jungleRoot = getJunglerStart(jungleRoot)
     return jungleRoot
                   
+# in : list : dic : {id, team, botstart, invade, position}
+# out : list : dic : {team, botstart, invade, list : dic : { timestamp, list [positions]}
+def prepareCJDatas(jungleRootList, team, botstart, invade):
+    preparedData = {'team':team, 'botstart':botstart, 'invade':invade, 'positions':{}}
+    for j in jungleRootList:
+        if team==j.get('team') and botstart==j.get('botstart') and invade==j.get('invade'):
+            for p in j.get('positions'):
+                time = str(p.get('t'))
+                if time in preparedData.get('positions'):
+                    preparedData['positions'][time].append([p.get('x'), p.get('y')])
+                else:
+                    preparedData['positions'][time]=[]
+                    preparedData['positions'][time].append([p.get('x'), p.get('y')])
+    return preparedData
+
+# in : list : match 
+# out : list : jungleRoot 
+def prepareJungleRootList(matchList, summonerName):
+    jungleRootList=[]
+    for match in matchList:
+        jungleRootList.append(getTheJungleRoot(match, summonerName))
+    return jungleRootList
 
 
         

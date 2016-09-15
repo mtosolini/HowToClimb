@@ -6,3 +6,8 @@ def isOnRedSide(squareSide,x,y):
 def isOnBotSide(x, y):
     return x >= y
 
+def drawCircleByOdds():
+    return None
+
+def drawCircleBySize():
+    return None
