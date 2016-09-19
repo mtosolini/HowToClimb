@@ -1,6 +1,7 @@
 import matchFct as m
 import bigstuffapicall as api
 import geometry as g
+import copy
 # positions des deux junglers / leur team / TIMEFRAME / liste des positions par frame / isInCircle
 # team 100 : start 0/0 : team 200 : start 14000/14000
 
@@ -55,6 +56,15 @@ def prepareCJDatas(jungleRootList, team, botstart, invade):
                     preparedData['positions'][time].append([p.get('x'), p.get('y')])
     return preparedData
 
+def clusterCJDatas(preparedDatas, radius, ncluster):
+    preparedDatasCopy = copy.deepcopy(preparedDatas)
+    data = preparedDatasCopy.get('positions')
+    for k,v in data.items():
+        data[k]=g.clustering(v, radius, ncluster)
+    return preparedDatasCopy
+
+
+
 # in : list : match 
 # out : list : jungleRoot 
 def prepareJungleRootList(matchList, summonerName):
@@ -62,6 +72,8 @@ def prepareJungleRootList(matchList, summonerName):
     for match in matchList:
         jungleRootList.append(getTheJungleRoot(match, summonerName))
     return jungleRootList
+
+
 
 
         

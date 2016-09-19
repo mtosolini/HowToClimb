@@ -13,6 +13,7 @@ def drawCircleByOdds():
 def drawCircleBySize():
     return None
 
+# Créé des groupes de points
 # in listPoint : [[x,y],..]
 def groupPoints(listPoint, radius):
     listCluster = []
@@ -44,11 +45,12 @@ def clustering(listPoint, radius, nclusters):
     listPointCopy = copy.deepcopy(listPoint)
     listCluster = []
     for c in range(nclusters):
-        listGroup = groupPoints(listPointCopy, radius)
-        longestList = getLongestList(listGroup)
-        listCluster.append(longestList)
-        for k,v in longestList.items():
-            deletePoints(v, listPointCopy)
+        if len(listPointCopy)>0:
+            listGroup = groupPoints(listPointCopy, radius)
+            longestList = getLongestList(listGroup)
+            listCluster.append(longestList)
+            for k,v in longestList.items():
+                deletePoints(v, listPointCopy)
     return listCluster
 
 

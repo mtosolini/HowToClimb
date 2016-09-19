@@ -21,7 +21,7 @@ def countAfkInGame(_match, summonerName):
                 keyTime = 'short'
             if timeAfk >= 5 and timeAfk < 15:
                 keyTime = 'medium'
-            if timeAfk >=20:
+            if timeAfk >=15:
                 keyTime = 'long'
             if str(mainPlayerTeam) == str(matchFct.getPlayersTeamByParticipantId(_match, player)):
                 if str(player)==str(mainPlayerId):
